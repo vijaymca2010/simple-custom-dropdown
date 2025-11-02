@@ -45,9 +45,38 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
         renderOptions(sublist, opt.children);
         li.appendChild(sublist);
 
+  // helper: decide alignment based on viewport space
+        function applySublistAlignment(parentLi: HTMLElement, subEl: HTMLElement) {
+          // clear previous alignment classes
+          subEl.classList.remove('cd-sublist--align-left', 'cd-sublist--align-right');
+          // measure bounding boxes
+          const parentRect = parentLi.getBoundingClientRect();
+          const subRect = subEl.getBoundingClientRect();
+          const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+          // default position: align to the right of parent (normal flow). If not enough space on right, align left.
+          const spaceOnRight = viewportWidth - parentRect.right;
+          const spaceOnLeft = parentRect.left;
+
+          if (spaceOnRight < subRect.width && spaceOnLeft >= subRect.width) {
+            subEl.classList.add('cd-sublist--align-left');
+          } else {
+            subEl.classList.add('cd-sublist--align-right');
+          }
+        }
+
+  // expose helper on the element so other code paths (keyboard) can reuse it
+  (sublist as any).__applyAlignment = applySublistAlignment;
+
         // open sublist on hover for mouse users
-        li.addEventListener('mouseenter', () => (sublist.style.display = 'block'));
-        li.addEventListener('mouseleave', () => (sublist.style.display = 'none'));
+        li.addEventListener('mouseenter', () => {
+          sublist.style.display = 'block';
+          applySublistAlignment(li, sublist);
+        });
+        li.addEventListener('mouseleave', () => {
+          sublist.style.display = 'none';
+          sublist.classList.remove('cd-sublist--align-left', 'cd-sublist--align-right');
+        });
       }
 
       listEl.appendChild(li);
@@ -164,6 +193,24 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
       const sub = cur.querySelector(':scope > ul') as HTMLElement | null;
       if (sub) {
         sub.style.display = 'block';
+        try {
+          const fn = (sub as any).__applyAlignment;
+          if (typeof fn === 'function') fn(cur, sub);
+          else {
+            // fallback inline computation
+            const parentRect = cur.getBoundingClientRect();
+            const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const spaceOnRight = viewportWidth - parentRect.right;
+            const spaceOnLeft = parentRect.left;
+            if (spaceOnRight < sub.getBoundingClientRect().width && spaceOnLeft >= sub.getBoundingClientRect().width) {
+              sub.classList.add('cd-sublist--align-left');
+            } else {
+              sub.classList.add('cd-sublist--align-right');
+            }
+          }
+        } catch (err) {
+          // ignore alignment errors
+        }
         cur.setAttribute('aria-expanded', 'true');
         pushFrame(sub, cur, 0);
       }
@@ -186,6 +233,19 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
     const sub = el.querySelector(':scope > ul') as HTMLElement | null;
     if (sub) {
       sub.style.display = 'block';
+      try {
+        (function() {
+          const parentRect = el.getBoundingClientRect();
+          const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+          const spaceOnRight = viewportWidth - parentRect.right;
+          const spaceOnLeft = parentRect.left;
+          if (spaceOnRight < sub.getBoundingClientRect().width && spaceOnLeft >= sub.getBoundingClientRect().width) {
+            sub.classList.add('cd-sublist--align-left');
+          } else {
+            sub.classList.add('cd-sublist--align-right');
+          }
+        })();
+      } catch (err) {}
       el.setAttribute('aria-expanded', 'true');
       pushFrame(sub, el, 0);
       return;
