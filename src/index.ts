@@ -9,6 +9,8 @@ export type OptionItem = {
   children?: OptionItem[];
 };
 
+import './styles/dropdown.scss';
+
 export function createDropdown(root: HTMLElement, options: OptionItem[], placeholder = 'Select') {
   const container = document.createElement('div');
   container.className = 'simple-custom-dropdown';
@@ -16,14 +18,14 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
 
   const button = document.createElement('button');
   button.type = 'button';
-  button.className = 'cd-button';
+  button.className = 'scd-button';
   button.setAttribute('aria-haspopup', 'listbox');
   button.setAttribute('aria-expanded', 'false');
   button.textContent = placeholder;
   container.appendChild(button);
 
   const list = document.createElement('ul');
-  list.className = 'cd-list';
+  list.className = 'scd-list';
   list.setAttribute('role', 'listbox');
   list.setAttribute('tabindex', '-1');
   list.style.display = 'none';
@@ -39,7 +41,7 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
 
       if (opt.children && opt.children.length) {
         const sublist = document.createElement('ul');
-        sublist.className = 'cd-sublist';
+        sublist.className = 'scd-sublist';
         sublist.setAttribute('role', 'listbox');
         sublist.style.display = 'none';
         renderOptions(sublist, opt.children);
@@ -48,7 +50,7 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
   // helper: decide alignment based on viewport space
         function applySublistAlignment(parentLi: HTMLElement, subEl: HTMLElement) {
           // clear previous alignment classes
-          subEl.classList.remove('cd-sublist--align-left', 'cd-sublist--align-right');
+          subEl.classList.remove('scd-sublist--align-left', 'scd-sublist--align-right');
           // measure bounding boxes
           const parentRect = parentLi.getBoundingClientRect();
           const subRect = subEl.getBoundingClientRect();
@@ -59,9 +61,9 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
           const spaceOnLeft = parentRect.left;
 
           if (spaceOnRight < subRect.width && spaceOnLeft >= subRect.width) {
-            subEl.classList.add('cd-sublist--align-left');
+            subEl.classList.add('scd-sublist--align-left');
           } else {
-            subEl.classList.add('cd-sublist--align-right');
+            subEl.classList.add('scd-sublist--align-right');
           }
         }
 
@@ -75,7 +77,7 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
         });
         li.addEventListener('mouseleave', () => {
           sublist.style.display = 'none';
-          sublist.classList.remove('cd-sublist--align-left', 'cd-sublist--align-right');
+          sublist.classList.remove('scd-sublist--align-left', 'scd-sublist--align-right');
         });
       }
 
@@ -203,9 +205,9 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
             const spaceOnRight = viewportWidth - parentRect.right;
             const spaceOnLeft = parentRect.left;
             if (spaceOnRight < sub.getBoundingClientRect().width && spaceOnLeft >= sub.getBoundingClientRect().width) {
-              sub.classList.add('cd-sublist--align-left');
+              sub.classList.add('scd-sublist--align-left');
             } else {
-              sub.classList.add('cd-sublist--align-right');
+              sub.classList.add('scd-sublist--align-right');
             }
           }
         } catch (err) {
@@ -240,9 +242,9 @@ export function createDropdown(root: HTMLElement, options: OptionItem[], placeho
           const spaceOnRight = viewportWidth - parentRect.right;
           const spaceOnLeft = parentRect.left;
           if (spaceOnRight < sub.getBoundingClientRect().width && spaceOnLeft >= sub.getBoundingClientRect().width) {
-            sub.classList.add('cd-sublist--align-left');
+            sub.classList.add('scd-sublist--align-left');
           } else {
-            sub.classList.add('cd-sublist--align-right');
+            sub.classList.add('scd-sublist--align-right');
           }
         })();
       } catch (err) {}
