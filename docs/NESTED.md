@@ -1,6 +1,6 @@
 # Nested menus, JSON schema, and accessibility notes
 
-This document covers visual diagrams of nested menus, a JSON schema for option trees used by `custom-dropdown`, and accessibility recommendations for deep nested lists.
+This document covers visual diagrams of nested menus, a JSON schema for option trees used by `simple-custom-dropdown`, and accessibility recommendations for deep nested lists.
 
 ---
 
@@ -135,7 +135,7 @@ Deeply nested menus bring additional accessibility considerations. Below are rec
 7. Testing
    - Use axe-core (browser or automated) to catch common issues.
    - Run manual tests with NVDA/VoiceOver/JAWS.
-   - Include keyboard-only tests in E2E suites (Playwright/Cypress).
+  - Include keyboard-only tests in E2E suites (Cypress/Playwright or similar).
 
 ---
 
