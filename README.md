@@ -80,7 +80,6 @@ npx http-server demo -p 5000
 
 3. Open `http://localhost:5000` in your browser and interact with the dropdown.
 
-
 Usage: nested options
 ---------------------
 
