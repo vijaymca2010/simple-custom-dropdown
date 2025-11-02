@@ -1,21 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests (disabled)
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# Playwright workflow removed. Kept as a placeholder to avoid accidental re-creation.
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - run: npm ci
-      - run: npm run build
-      - uses: microsoft/playwright-github-action@v1
-        with:
-          run: npx playwright test

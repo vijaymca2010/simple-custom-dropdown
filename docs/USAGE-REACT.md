@@ -101,7 +101,7 @@ const items: OptionItem[] = [
 ## Testing in React
 
 - In unit tests, mount the component container, call `createDropdown`, and query the DOM for changes.
-- For interaction tests, consider Playwright or React Testing Library + user-event (jsdom) for keyboard events.
+- For interaction tests, consider an E2E test runner or React Testing Library + user-event (jsdom) for keyboard events.
 
 ## Server-Side Rendering
 

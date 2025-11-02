@@ -136,7 +136,7 @@ const myOptions = [
 ## Testing
 
 - Next.js: Use React Testing Library to mount the client component and simulate user interactions. For SSR tests, make sure DOM code is not executed during server render.
-- Angular: Use Angular TestBed to create a host component and assert DOM updates. For E2E, use Playwright or Cypress to interact with the demo page.
+- Angular: Use Angular TestBed to create a host component and assert DOM updates. For E2E, use a browser-based E2E runner (Cypress, Playwright, etc.) to interact with the demo page.
 
 ---
 

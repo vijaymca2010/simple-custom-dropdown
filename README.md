@@ -94,21 +94,21 @@ npm install
 npm run dev
 ```
 
-3) Automated E2E tests (Playwright)
+3) Automated E2E tests
 
-- Use Playwright to script user flows and assertions (click, keyboard, snapshot). Example flow:
+- Use E2E tests to script user flows and assertions (click, keyboard, snapshot). Example flow:
 	- Run `npm run build` and serve demo.
-	- Use Playwright to open the page, click the dropdown, select items, assert emitted values.
+	- Use an E2E test runner to open the page, click the dropdown, select items, assert emitted values.
 
 4) Component catalog / visual tests (Storybook)
 
-- Use Storybook to create stories for variants (single-level, nested, keyboard). Add Chromatic or Playwright for visual regression.
+- Use Storybook to create stories for variants (single-level, nested, keyboard). Add Chromatic or an E2E/visual tool for visual regression.
 
 5) Accessibility checks
 
 - Use axe (axe-core or browser extension) to run automated accessibility checks on the demo pages.
 
-Which option should I add next? I can scaffold Playwright tests or Storybook stories and CI if you want automated UI checks.
+Which option should I add next? I can scaffold E2E tests or Storybook stories and CI if you want automated UI checks.
 
 Quick copy-paste snippet for other projects
 ------------------------------------------
